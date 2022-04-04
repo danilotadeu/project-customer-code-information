@@ -37,3 +37,19 @@ Response:
 ```bash
 go test -timeout 30s -run ^Test_apiImpl_CodeInformationHandler$ github.com/danilotadeu/r-customer-code-information/api/codeinformation
 ```
+
+## Provider ## 
+
+- Para rodar o mock do provider, acessar o path:
+
+```
+$ cd /mocks/provider
+```
+
+e rodar o comando:
+
+```
+$ make run-watch
+```
+
+o mock provider estará disponível na porta :4000.
