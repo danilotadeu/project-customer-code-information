@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	serverInit "github.com/danilotadeu/r-customer-code-information-provider/server"
+	serverInit "github.com/danilotadeu/r-customer-code-information/server"
 	"github.com/joho/godotenv"
 )
 
@@ -12,6 +12,7 @@ var (
 )
 
 func init() {
+	//Deletar devido nao funcionar assim no ambiente real
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")

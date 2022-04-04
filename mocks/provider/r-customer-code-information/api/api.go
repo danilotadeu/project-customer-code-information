@@ -3,8 +3,8 @@ package api
 import (
 	"log"
 
-	"github.com/danilotadeu/r-customer-code-information-provider/api/codeinformation"
-	"github.com/danilotadeu/r-customer-code-information-provider/app"
+	"github.com/danilotadeu/services/r-customer-code-information-provider/api/codeinformation"
+	"github.com/danilotadeu/services/r-customer-code-information-provider/app"
 	"github.com/gofiber/fiber/v2"
 )
 

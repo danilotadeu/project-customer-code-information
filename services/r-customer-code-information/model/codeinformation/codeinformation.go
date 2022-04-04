@@ -4,11 +4,11 @@ import "encoding/xml"
 
 //CodeInformationRequest is a struct to request
 type CodeInformationRequest struct {
-	UserID   string `json:"userId"`
+	UserID   string `json:"userId" validate:"required,min=1,max=32"`
 	Password string `json:"password,omitempty"`
 	Customer struct {
-		ID       string `json:"id"`
-		SyncFlag bool   `json:"syncFlag"`
+		ID       string `json:"id" validate:"required,min=1,max=32"`
+		SyncFlag bool
 	} `json:"customer"`
 }
 

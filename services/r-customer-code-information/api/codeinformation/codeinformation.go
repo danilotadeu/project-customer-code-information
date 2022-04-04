@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/go-playground/validator"
+
 	"github.com/danilotadeu/r-customer-code-information/app"
 	codeinformationModel "github.com/danilotadeu/r-customer-code-information/model/codeinformation"
 	"github.com/gofiber/fiber/v2"
@@ -38,6 +40,12 @@ func (p *apiImpl) CodeInformationHandler(c *fiber.Ctx) error {
 		log.Println("api.codeinformation.codeinformation.codeinformation.body_parser", err.Error())
 		return err
 	}
+
+	validate := validator.New()
+	if err := validate.Struct(requestCodeInformation); err != nil {
+		return err
+	}
+
 	headers := c.GetReqHeaders()
 	var clientID string
 	if val, ok := headers[clientIDC]; ok {
@@ -70,7 +78,7 @@ func (p *apiImpl) CodeInformationHandler(c *fiber.Ctx) error {
 	log.Println("    DEBUG    EngDB | Engineering | GMID |  | - | ENGNB003153 | orch-r-customer-code-information | 1 | - | - | " + formatted + " | - | - | requestUriReceived | POST - /v1/r-customer-code-information")
 	/*LOG FIM*/
 
-	customer, err := p.apps.CodeInformation.GetCodeInformation(ctx, requestCodeInformation)
+	customerSuccess, customerErr, err := p.apps.CodeInformation.GetCodeInformation(ctx, requestCodeInformation)
 	if err != nil {
 		log.Println("api.codeinformation.codeinformation.codeinformation.get_code_information", err.Error())
 		return c.Status(http.StatusBadRequest).JSON(codeinformationModel.CodeInformationResponseError{
@@ -83,26 +91,23 @@ func (p *apiImpl) CodeInformationHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	responseCustomer, ok := customer.(*codeinformationModel.CodeInformationServiceResponse)
-	if ok {
-		responseAdapter, _ := json.Marshal(responseCustomer)
+	if customerSuccess != nil {
+		responseAdapter, _ := json.Marshal(customerSuccess)
 		log.Println("    DEBUG    EngDB | Engineering | GMID |  | - | ENGNB003153 | orch-r-customer-code-information | 1 | - | - | " + formatted + " | - | - | responseAdapter | " + string(responseAdapter))
 		return c.JSON(codeinformationModel.CodeInformationResponse{
-			CustomerCode: responseCustomer.Transform(),
+			CustomerCode: customerSuccess.Transform(),
 		})
 	}
 
-	responseCustomerErr, _ := customer.(*codeinformationModel.CodeInformationResponseProviderError)
-	responseAdapter, _ := json.Marshal(responseCustomerErr)
-
+	responseAdapter, _ := json.Marshal(customerErr)
 	log.Println("    DEBUG    EngDB | Engineering | GMID |  | - | ENGNB003153 | orch-r-customer-code-information | 1 | - | - | " + formatted + " | - | - | responseAdapter | " + string(responseAdapter))
 
 	return c.Status(http.StatusBadRequest).JSON(codeinformationModel.CodeInformationResponseError{
-		Description: responseCustomerErr.Body.Fault.Faultstring.Text,
+		Description: customerErr.Body.Fault.Faultstring.Text,
 		Provider: codeinformationModel.Provider{
 			ServiceName:  "r-customer-code-information",
-			ErrorCode:    responseCustomerErr.Body.Fault.Faultcode.Ns0,
-			ErrorMessage: responseCustomerErr.Body.Fault.Faultstring.Text,
+			ErrorCode:    customerErr.Body.Fault.Faultcode.Ns0,
+			ErrorMessage: customerErr.Body.Fault.Faultstring.Text,
 		},
 	})
 }

@@ -1,4 +1,4 @@
-module github.com/danilotadeu/r-customer-code-information-provider
+module github.com/danilotadeu/services/r-customer-code-information-provider
 
 go 1.17
 

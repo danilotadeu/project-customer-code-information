@@ -3,8 +3,8 @@ package server
 import (
 	"os"
 
-	"github.com/danilotadeu/r-customer-code-information-provider/api"
-	"github.com/danilotadeu/r-customer-code-information-provider/app"
+	"github.com/danilotadeu/services/r-customer-code-information-provider/api"
+	"github.com/danilotadeu/services/r-customer-code-information-provider/app"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -26,5 +26,5 @@ func New() Server {
 func (e *server) Start() {
 	e.App = app.Register()
 	e.Fiber = api.Register(e.App)
-	e.Fiber.Listen(":"+os.Getenv("PORT"))
+	e.Fiber.Listen(":" + os.Getenv("PORT"))
 }

@@ -3,7 +3,7 @@ package codeinformation
 import (
 	"fmt"
 
-	codeinformationModel "github.com/danilotadeu/r-customer-code-information-provider/model/codeinformation"
+	codeinformationModel "github.com/danilotadeu/services/r-customer-code-information-provider/model/codeinformation"
 	"github.com/valyala/fasthttp"
 )
 

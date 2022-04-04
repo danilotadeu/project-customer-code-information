@@ -9,7 +9,8 @@ o serviço estará disponível na porta :3000
 
 ## CURL para efetuar a chamada no serviço ##
 
-curl --location --request POST 'http://127.0.0.1:3000/v1/r-customer-code-information' \
+```bash
+$ curl --location --request POST 'http://127.0.0.1:3000/v1/r-customer-code-information' \
 --header 'clientId: 123' \
 --header 'messageId: 123456' \
 --header 'Authorization: Bearer omcauckqoiy6jyzgsxu6gi7sxh' \
@@ -21,9 +22,18 @@ curl --location --request POST 'http://127.0.0.1:3000/v1/r-customer-code-informa
         "syncFlag": false
     }
 }'
+```
 
+Response:
+```
+{
+    "customerCode": "8882828282"
+}
+```
 ## Tests ##
 
 - Para rodar os testes, rodar o comando abaixo:
 
+```bash
 go test -timeout 30s -run ^Test_apiImpl_CodeInformationHandler$ github.com/danilotadeu/r-customer-code-information/api/codeinformation
+```

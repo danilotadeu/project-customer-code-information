@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/danilotadeu/r-customer-code-information-provider/app"
-	codeinformationModel "github.com/danilotadeu/r-customer-code-information-provider/model/codeinformation"
+	"github.com/danilotadeu/services/r-customer-code-information-provider/app"
+	codeinformationModel "github.com/danilotadeu/services/r-customer-code-information-provider/model/codeinformation"
 	"github.com/gofiber/fiber/v2"
 )
 

@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	serverInit "github.com/danilotadeu/r-customer-code-information/server"
+	serverInit "github.com/danilotadeu/services/r-customer-code-information-provider/server"
 	"github.com/joho/godotenv"
 )
 
